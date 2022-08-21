@@ -40,3 +40,12 @@ let getJSONData = function(url){
         return result;
     });
 }
+
+document.addEventListener('DOMContentLoaded',()=>{
+  let usuario = sessionStorage.getItem('cliente');
+
+  if(usuario === null) {
+    alert('Debes iniciar sesión antes de continuar');
+    location.href='login.html'
+  }
+})
