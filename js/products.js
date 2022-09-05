@@ -1,10 +1,10 @@
-let autos = [];
+let array = [];
 
-function showProductsList(autos){
+function showProductsList(array){
     let htmlContentToAppend = "";
 
-    for(let i = 0; i < autos.products.length; i++){ 
-        let product = autos.products[i];
+    for(let i = 0; i < array.length; i++){ 
+        let product = array[i];
         htmlContentToAppend += `
         <div class="list-group-item list-group-item-action">
             <div class="row">
@@ -14,8 +14,8 @@ function showProductsList(autos){
                 <div class="col">
                     <div class="d-flex w-100 justify-content-between">
                         <div class="mb-1">
-                        <h4>`+ product.name +`</h4> 
-                        <p> `+ product.description +`</p> 
+                        <h4>`+ product.name + ' - ' + product.currency + ' ' + product.cost +`</h4> 
+                        <p> `+ product.description + `</p> 
                         </div>
                         <small class="text-muted">` + product.soldCount + ` artículos</small> 
                     </div>
@@ -24,16 +24,66 @@ function showProductsList(autos){
             </div>
         </div>
         `
-        document.getElementById("carLista").innerHTML = htmlContentToAppend; 
+        document.getElementById("carLista").innerHTML = htmlContentToAppend;
+        
     }
 }
 
+function filtrarPrecio() {
+    let desde = parseInt(document.getElementById('desde').value);
+    let hasta = parseInt(document.getElementById('hasta').value);
+
+    let filtrados = array.filter(producto => producto.cost >= desde && producto.cost <= hasta);
+    showProductsList(filtrados);
+};
+
+function ordenarRelevancia() {
+    let filtrados = array.sort((a,b)=>{
+        return (a.soldCount < b.soldCount) ? 1 : -1;
+    });
+    showProductsList(filtrados);
+};
+
+function ordenarMayorPrecio() {
+    let filtrados = array.sort((a,b)=>{
+        return (a.cost < b.cost) ? 1 : -1;
+    });
+    showProductsList(filtrados);
+};
+
+function ordenarMenorPrecio() {
+    let filtrados = array.sort((a,b)=>a.cost - b.cost);
+    showProductsList(filtrados);
+}
+
+
+let catid = localStorage.getItem('catID');
+
 document.addEventListener("DOMContentLoaded", function(e){
-    getJSONData(LIST_AUTOS).then(function(resultObj){
+    getJSONData(PRODUCTS_URL + catid + EXT_TYPE).then(function(resultObj){
         if (resultObj.status === "ok")
         {
-            autos = resultObj.data;
-            showProductsList(autos);
+            array = resultObj.data;
+            document.getElementById('catname').innerHTML = array.catName;
+            array = resultObj.data.products;
+            localStorage.setItem('arraydefault',JSON.stringify(array))
+            showProductsList(array);
         }
+    });
+    document.getElementById('filtrar_precio').addEventListener('click', ()=>{
+        filtrarPrecio(array);
+    });
+    document.getElementById('limpiar').addEventListener('click', ()=>{
+        let arraydefault = JSON.parse(localStorage.getItem('arraydefault'))
+        showProductsList(arraydefault);
+    });
+    document.getElementById('relevancia').addEventListener('click', ()=>{
+        ordenarRelevancia(array);
+    });
+    document.getElementById('maxprecio').addEventListener('click', ()=>{
+        ordenarMayorPrecio(array);
+    });
+    document.getElementById('minprecio').addEventListener('click', ()=>{
+        ordenarMenorPrecio(array);
     });
 });

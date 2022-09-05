@@ -31,6 +31,7 @@
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" id="user"></a>
           </li>
         </ul>
       </div>
@@ -38,7 +39,19 @@
   </nav>
   <div class="text-center p-4">
     <h1>Productos</h1>
-    <p class="lead">Veras aqui todos los productos de la categoria <b>Autos</b></p>
+    <p class="lead">Veras aqui todos los productos de la categoria <b id="catname"></b></p>
+  </div>
+  <div class="container text-end p-4">
+  <p>Ordenar por :  <button id="minprecio" class="btn btn-light"><i class="fas fa-sort-amount-down"></i>$</button>
+    <button id="maxprecio" class="btn btn-light"><i class="fas fa-sort-amount-up"></i>$</button>
+    <button id="relevancia" class="btn btn-light"><i class="fas fa-sort-amount-down"></i>Rel</button>
+  </p>
+  <p>Filtrar precio  <input type="number" id="desde" placeholder="Desde" class="ds-input">
+    <input type="number" id="hasta" placeholder="Hasta">
+    <button id="filtrar_precio" class="btn btn-light">Filtrar</button>
+    <button id="limpiar" class="btn btn-link">Limpiar </button>
+  </p>
+    
   </div>
   <main class="pb-5 container">
     <div class="container" id="carLista">

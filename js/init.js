@@ -44,6 +44,9 @@ let getJSONData = function(url){
 document.addEventListener('DOMContentLoaded',()=>{
   let usuario = sessionStorage.getItem('cliente');
 
+  let user = document.getElementById('user')
+  user.innerHTML = usuario
+
   if(usuario === null) {
     alert('Debes iniciar sesión antes de continuar');
     location.href='login.html'
