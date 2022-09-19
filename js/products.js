@@ -3,23 +3,22 @@ let array = [];
 function showProductsList(array){
     let htmlContentToAppend = "";
 
-    for(let i = 0; i < array.length; i++){ 
-        let product = array[i];
+    for(let product of array){ 
+        
         htmlContentToAppend += `
-        <div class="list-group-item list-group-item-action">
+        <div class="list-group-item list-group-item-action cursor-active" id="${product.id}" onclick='localStorage.setItem("prodID",${product.id}); window.location="product-info.html"'>
             <div class="row">
                 <div class="col-3">
-                    <img src="` + product.image + `" alt="product image" class="img-thumbnail">
+                    <img src=" ${product.image} " alt="product image" class="img-thumbnail">
                 </div>
                 <div class="col">
                     <div class="d-flex w-100 justify-content-between">
                         <div class="mb-1">
-                        <h4>`+ product.name + ' - ' + product.currency + ' ' + product.cost +`</h4> 
-                        <p> `+ product.description + `</p> 
+                        <h4>${product.name}  -  ${product.currency}  ${product.cost}</h4> 
+                        <p> ${product.description}</p> 
                         </div>
-                        <small class="text-muted">` + product.soldCount + ` artículos</small> 
+                        <small class="text-muted"> ${product.soldCount} artículos</small> 
                     </div>
-
                 </div>
             </div>
         </div>
@@ -57,9 +56,10 @@ function ordenarMenorPrecio() {
 }
 
 
-let catid = localStorage.getItem('catID');
+
 
 document.addEventListener("DOMContentLoaded", function(e){
+    let catid = localStorage.getItem('catID');
     getJSONData(PRODUCTS_URL + catid + EXT_TYPE).then(function(resultObj){
         if (resultObj.status === "ok")
         {
@@ -85,5 +85,5 @@ document.addEventListener("DOMContentLoaded", function(e){
     });
     document.getElementById('minprecio').addEventListener('click', ()=>{
         ordenarMenorPrecio(array);
-    });
+    });    
 });

@@ -195,3 +195,20 @@ a.custom-card:hover {
   margin: auto;
   display: block;
 }
+
+.produ{
+  margin-top: 4%;
+  margin-bottom: 3%;
+}
+
+.comments{
+  margin-top: 3%;
+}
+
+.check{
+  color: gold;
+}
+
+.slect{
+  width: 200px;
+}
