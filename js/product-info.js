@@ -31,7 +31,16 @@ function showProducto(array) {
     
     `
 
-    document.getElementById("contenedor_producto").innerHTML = contenido
+    document.getElementById("contenedor_producto").innerHTML = contenido;
+
+    array.relatedProducts.forEach(element => {
+    document.getElementById("contenedor_relacionados").innerHTML +=
+    `
+    <div class="col-sm-3 cursor-active" onclick='localStorage.setItem("prodID",${element.id}); window.location="product-info.html"'>
+        <img src="${element.image}" class="img-thumbnail">
+    </div>
+    `
+    })
 
 };
 
