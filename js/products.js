@@ -1,11 +1,11 @@
 let array = [];
 
 function showProductsList(array){
-    let htmlContentToAppend = "";
+    let contenido = "";
 
     for(let product of array){ 
         
-        htmlContentToAppend += `
+        contenido += `
         <div class="list-group-item list-group-item-action cursor-active" id="${product.id}" onclick='localStorage.setItem("prodID",${product.id}); window.location="product-info.html"'>
             <div class="row">
                 <div class="col-3">
@@ -23,7 +23,7 @@ function showProductsList(array){
             </div>
         </div>
         `
-        document.getElementById("carLista").innerHTML = htmlContentToAppend;
+        document.getElementById("carLista").innerHTML = contenido;
         
     }
 }
