@@ -21,9 +21,9 @@ function showCosts(array) {
             <p class="text-muted mb-0">Costo unitario del producto por cantidad</p></li>
             <li class="list-group-item"><span>Costo de envío</span><p class="float-end text-muted" id="costoEnvio">${array.articles[0].currency + ' ' + (array.articles[0].unitCost * 0.05)}</p><br>
             <p class="text-muted mb-0">Según el tipo de envío</p></li>
-            <li class="list-group-item"><span>Total($)</span><p class="float-end mb-0" id="totalCosto">${array.articles[0].currency + ' ' + (array.articles[0].unitCost + (array.articles[0].unitCost * 0.05))}</p></li>
+            <li class="list-group-item mb-2"><span>Total($)</span><p class="float-end mb-0" id="totalCosto">${array.articles[0].currency + ' ' + (array.articles[0].unitCost + (array.articles[0].unitCost * 0.05))}</p></li>
         `
-    document.getElementById('costos').innerHTML  = contenido;
+    document.getElementById('costos').innerHTML = contenido;
 }
 
 function envio(cant) {
@@ -40,12 +40,66 @@ function envio(cant) {
     }
 
     let total = array.articles[0].unitCost * costo
-    document.getElementById('costoEnvio').innerHTML = array.articles[0].currency + ' ' + total    
-    
+    document.getElementById('costoEnvio').innerHTML = array.articles[0].currency + ' ' + total
+
     if (cant != 0) {
         return total
     }
     return 0
+}
+
+function formasPago() {
+    let numTarjeta = document.getElementById('numTarjeta')
+    let codigo = document.getElementById('codigo')
+    let vencimiento = document.getElementById('vencimiento')
+    let numCuenta = document.getElementById('numCuenta')
+    let tarjeta = document.getElementById('tarjeta').checked
+    let transf = document.getElementById('transf').checked
+
+    if (tarjeta) {
+        numCuenta.disabled = true
+        numTarjeta.disabled = false
+        codigo.disabled = false
+        vencimiento.disabled = false
+        document.getElementById('seleccionado').innerHTML = 'Tarjeta de crédito'
+    } else if (transf) {
+        numCuenta.disabled = false
+        numTarjeta.disabled = true
+        codigo.disabled = true
+        vencimiento.disabled = true
+        document.getElementById('seleccionado').innerHTML = 'Transferencia bancaria'
+    }
+}
+
+function validacion() {
+    let tarjeta = document.getElementById('tarjeta')
+    let transf = document.getElementById('transf')
+    let feedback = document.getElementById('feedback')
+    let valido = true
+    let cant = document.getElementById('cant')
+
+    if (tarjeta.checked || transf.checked) {
+        feedback.classList.remove("invalido");
+        feedback.style.display = "none";
+    } else {
+        valido = false
+        feedback.classList.add("invalido");
+        feedback.style.display = "block";
+    }
+
+    if (cant.value == 0) {
+        cant.setCustomValidity(false)
+        valido = false
+    } else {
+        cant.setCustomValidity('')
+    }
+    
+    if (valido) {
+        document.getElementById("alert-success").classList.add("show")
+        return valido
+    } else {
+        return valido
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -56,17 +110,33 @@ document.addEventListener('DOMContentLoaded', () => {
             showCosts(array)
 
         }
-        
+
         document.getElementById('cant').addEventListener('change', () => {
             let cant = document.getElementById('cant').value
             document.getElementById('total').innerHTML = array.articles[0].currency + ' ' + cant * array.articles[0].unitCost
-            document.getElementById('totalCosto').innerHTML = array.articles[0].currency + ' ' + (cant * array.articles[0].unitCost + envio(cant))           
+            document.getElementById('totalCosto').innerHTML = array.articles[0].currency + ' ' + (cant * array.articles[0].unitCost + envio(cant))
         })
         document.getElementById('radios').addEventListener('change', () => {
             let cant = document.getElementById('cant').value
             document.getElementById('total').innerHTML = array.articles[0].currency + ' ' + cant * array.articles[0].unitCost
-            document.getElementById('totalCosto').innerHTML = array.articles[0].currency + ' ' + (cant * array.articles[0].unitCost + envio(cant))           
+            document.getElementById('totalCosto').innerHTML = array.articles[0].currency + ' ' + (cant * array.articles[0].unitCost + envio(cant))
         })
     })
+    document.getElementById('tarjeta').addEventListener('click', () => {
+        formasPago()
+    })
+    document.getElementById('transf').addEventListener('click', () => {
+        formasPago()
+    })
+    document.getElementById('formulario').addEventListener('submit', event => {
+        if (!validacion() || !this.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        event.preventDefault();
+        event.stopPropagation();
+        document.body.classList.add('was-validated');
 
+        ['change', 'input'].forEach(evento => { document.body.addEventListener(evento, validacion) })
+    })
 }) 

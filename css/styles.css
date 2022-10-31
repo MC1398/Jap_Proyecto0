@@ -216,3 +216,7 @@ a.custom-card:hover {
 .img-td{
   width: 75px;
 }
+
+.invalido{
+  color: red;
+}
