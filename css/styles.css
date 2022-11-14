@@ -220,3 +220,8 @@ a.custom-card:hover {
 .invalido{
   color: red;
 }
+
+.imgP{
+  float: right;
+  width: 80px;
+}

@@ -1,9 +1,13 @@
 let array = [];
 
+//Funcion que toma los productos del JSON y los muestra
 function showProducto(array) {
     let contenido = `
     <div>
-        <h2 class="produ"> ${array.name} </h2> <hr>
+        <div class="row">
+            <div class="col-10"><h2 class="produ"> ${array.name} </h2></div>
+            <div class="col-1 mt-5 me-4"><button class="btn btn-success" id="comprar">Comprar</button></div>
+        </div> <hr>
         <b> Precio </b> <br>
         <span>${array.currency} ${array.cost}</span> <br><br>
         <b> Descripción </b> <br>
@@ -13,25 +17,26 @@ function showProducto(array) {
         <b> Cantidad de vendidos </b> <br>
         <span>${array.soldCount}</span> <br><br>
         <b> Imagenes ilustrativas </b> <br>
-        <div class="row">
-            <div class="col-sm-3">
-                <img src="${array.images[0]}" class="img-thumbnail">
-            </div>
-            <div class="col-sm-3">
-                <img src="${array.images[1]}" class="img-thumbnail">
-            </div>
-            <div class="col-sm-3">
-                <img src="${array.images[2]}" class="img-thumbnail">
-            </div>
-            <div class="col-sm-3">
-                <img src="${array.images[3]}" class="img-thumbnail">
-            </div>
-        </div>
     </div>
     
     `
-
     document.getElementById("contenedor_producto").innerHTML = contenido;
+
+
+    document.getElementById("imgs").innerHTML +=
+        `<div class="carousel-item active">
+            <img src="${array.images[0]}" class="img-thumbnail d-block w-50" data-bs-interval="2000">
+        </div>
+        <div class="carousel-item">
+            <img src="${array.images[1]}" class="img-thumbnail d-block w-50" data-bs-interval="2000">
+        </div>
+        <div class="carousel-item">
+            <img src="${array.images[2]}" class="img-thumbnail d-block w-50" data-bs-interval="1000">
+        </div>
+        <div class="carousel-item">
+            <img src="${array.images[3]}" class="img-thumbnail d-block w-50" data-bs-interval="1000">
+        </div>
+        `
 
     array.relatedProducts.forEach(element => {
     document.getElementById("contenedor_relacionados").innerHTML +=
@@ -68,24 +73,45 @@ function showComments(array) {
     document.getElementById("comments").innerHTML = contenido;
 };
 
-// function comentar() {
-//     let comment = document.getElementById('comentario');
-//     array.push(comment.value);
-//     showComments(array)
-// };
+//Desafiate 2
+function comentar() {
+    let comment = document.getElementById('comentario').value;
+    let puntos = document.getElementById('puntuacion').value;
+    
+    document.getElementById("comments").innerHTML += `
+    <li class="list-group-item"><b>${localStorage.getItem('cliente')}</b> - <span class="text-secondary">Hace segundos</span> - <span id="qualy">${puntuacion(puntos)} </span>
+     <br> <p class="text-secondary">${comment}</p> </li>
+`
+    document.getElementById('comentario').value = '';
+    document.getElementById('puntuacion').value = document.getElementById('elegir').value;
+
+};
+
+function comprarProducto(array){
+    localStorage.setItem('Pimg', JSON.stringify(array.images[0]));
+    localStorage.setItem('Ptitu', JSON.stringify(array.name));
+    localStorage.setItem('Pmoneda', JSON.stringify(array.currency));
+    localStorage.setItem('Pcosto', JSON.stringify(array.cost));
+}
 
 document.addEventListener("DOMContentLoaded", () => {
     let prodID = localStorage.getItem('prodID');
     getJSONData(PRODUCT_INFO_URL + prodID + EXT_TYPE).then((resultObj) => {
         if (resultObj.status === "ok") {
             array = resultObj.data;
-            showProducto(array)
+            showProducto(array);
         };
+        document.getElementById('comprar').addEventListener('click', ()=>{
+            comprarProducto(resultObj.data);
+        });
     });
     getJSONData(PRODUCT_INFO_COMMENTS_URL + prodID + EXT_TYPE).then((resultObj) => {
         if (resultObj.status === "ok") {
             array = resultObj.data;
-            showComments(array)
+            showComments(array);
         };
+        document.getElementById('enviar').addEventListener('click', ()=>{
+            comentar();
+        });
     });
-})
+});

@@ -59,9 +59,49 @@
     </div>
   </nav>
   <main>
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+    <div class="m-0 row justify-content-center">
+      <div class="col-8">
+        <div class="row mt-4 mb-5">
+          <div class="col-4"><h1 class="">Perfil</h1></div>
+          <div class="col"><img src="/img/img_perfil.png" class="imgP" id="imgP"></div>
+        </div>
+        <hr>
+        <!-- Datos del usario -->
+        <div class="row mb-5">
+          <div class="col-6 mb-3">
+            <label for="nombre1">Primer nombre*</label>
+            <input type="text" class="form-control col-4" name="nombre1" id="nombre1">
+          </div>
+          <div class="col-6 mb-3">
+            <label for="nombre2">Segundo nombre</label>
+            <input type="text" class="form-control col-4" name="nombre2" id="nombre2">
+          </div>
+          <div class="col-6 mb-3">
+            <label for="apellido1">Primer apellido*</label>
+            <input type="text" class="form-control col-4" name="apellido1" id="apellido1">
+          </div>
+          <div class="col-6 mb-3">
+            <label for="apellido2">Segundo apellido</label>
+            <input type="text" class="form-control col-4" name="apellido2" id="apellido2">
+          </div>
+          <div class="col-6 mb-3">
+            <label for="email">E-mail</label>
+            <input type="text" class="form-control col-4" name="email" id="email">
+          </div>
+          <div class="col-6 mb-3">
+            <label for="subirImg">Imagen de perfil</label>
+            <input type="file" class="form-control" name="subirImg" id="subirImg">
+          </div>
+          <div class="col-6 mb-3">
+            <label for="telefono">Teléfono de contacto</label>
+            <input type="number" class="form-control col-4" name="telefono" id="telefono">
+          </div>
+          <div class="invalido" id="obligatorios"></div>
+          </div>
+        <hr>
+        <button class="btn btn-primary mt-2" id="btnGuardar">
+          Guardar Cambios
+        </button>
       </div>
     </div>
   </main>

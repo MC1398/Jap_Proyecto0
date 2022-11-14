@@ -1,5 +1,6 @@
 let array = [];
 
+//Funcion que toma datos del JSON y en una tabla la informacion del producto
 function showArticulos(array) {
     let contenido = `
             <tr>
@@ -13,8 +14,21 @@ function showArticulos(array) {
 
     document.getElementById('articulos').innerHTML = contenido;
 
+//Desafiate 5
+    if (localStorage.getItem('Ptitu')) {
+        let otroproducto = `
+            <td scope="row"> <img class="img-td" src="${JSON.parse(localStorage.getItem('Pimg'))}"> </td>
+            <td>${JSON.parse(localStorage.getItem('Ptitu'))}</td>
+            <td>${JSON.parse(localStorage.getItem('Pmoneda')) + ' ' + JSON.parse(localStorage.getItem('Pcosto'))}</td>
+            <td class="col-1"><input type="number" id="cant2" value="1" class="form-control"></td>
+            <th id="total2">${JSON.parse(localStorage.getItem('Pmoneda')) + ' ' + JSON.parse(localStorage.getItem('Pcosto'))}</th>
+        `
+        document.getElementById('articulos').innerHTML += otroproducto;
+    }
+
 }
 
+//Funcion que muestra lista con todos los costos dependiendo de la cantidad y el envio seleccionado
 function showCosts(array) {
     let contenido = `
             <li class="list-group-item"><span>Subtotal</span><p class="float-end text-muted">${array.articles[0].currency + ' ' + array.articles[0].unitCost}</p><br>
@@ -26,6 +40,7 @@ function showCosts(array) {
     document.getElementById('costos').innerHTML = contenido;
 }
 
+//Funcion que calcula el costo de envio dependiendo que se seleccione y lo muestra en la lista de costos
 function envio(cant) {
     let premium = document.getElementById('premium').checked
     let express = document.getElementById('express').checked
@@ -48,6 +63,7 @@ function envio(cant) {
     return 0
 }
 
+//Funcion que dependiendo que forma de pago se selecciona activa/desactiva los campos en el modal
 function formasPago() {
     let numTarjeta = document.getElementById('numTarjeta')
     let codigo = document.getElementById('codigo')
@@ -71,6 +87,7 @@ function formasPago() {
     }
 }
 
+//Funcion que verifica que los campos sean correctos y no esten vacios avisando al usuario
 function validacion() {
     let tarjeta = document.getElementById('tarjeta')
     let transf = document.getElementById('transf')
@@ -111,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         }
 
-        document.getElementById('cant').addEventListener('change', () => {
+        document.getElementById('cant').addEventListener('input', () => {
             let cant = document.getElementById('cant').value
             document.getElementById('total').innerHTML = array.articles[0].currency + ' ' + cant * array.articles[0].unitCost
             document.getElementById('totalCosto').innerHTML = array.articles[0].currency + ' ' + (cant * array.articles[0].unitCost + envio(cant))

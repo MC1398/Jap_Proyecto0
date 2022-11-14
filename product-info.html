@@ -47,8 +47,17 @@
   <main>
     <div class="container">
       <div id="contenedor_producto">
+        <!-- Elementos traidos desde JavaScript -->
+      </div>
+      <!-- Desafiate 4 -->
+      <div class="carousel slide"  data-bs-ride="carousel">
+        <div class="carousel-inner" id="imgs">
+          <!-- Elementos traidos desde JavaScript -->
+        </div>
+
       </div>
       <hr>
+      <!-- Seccion de comentarios -->
       <div>
         <h4 class="comments"> Comentarios </h4>
         <ul class="list-group" id="comments"></ul> <br>
@@ -56,7 +65,7 @@
         <textarea name="comentario" id="comentario" cols="70" rows="5" class="form-control"></textarea> <br>
         <label for="puntuacion">Puntuación:</label>
         <select name="puntuacion" id="puntuacion" class="form-select slect">
-          <option selected>Elegír</option>
+          <option id="elegir" selected>Elegír</option>
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
@@ -66,9 +75,10 @@
         <button class="btn btn-primary" id="enviar">Enviar</button>
       </div> <br>
       <hr>
+      <!-- Productos relacionados -->
       <h4>Productos relacionados</h4> <br>
       <div class="row" id="contenedor_relacionados">
-
+        <!-- Elementos traidos desde JavaScript -->
       </div>
     </div>
   </main>

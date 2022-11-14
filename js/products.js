@@ -53,8 +53,17 @@ function ordenarMayorPrecio() {
 function ordenarMenorPrecio() {
     let filtrados = array.sort((a,b)=>a.cost - b.cost);
     showProductsList(filtrados);
-}
+};
 
+//Desafiate 2
+function buscarProducto() {
+    let texto = document.getElementById('buscador').value;
+    
+    let listafiltrada = array.filter( producto => {
+        return producto.name.toLowerCase().indexOf(texto.toLowerCase()) > -1;
+    })
+    showProductsList(listafiltrada);
+}
 
 
 
@@ -85,5 +94,8 @@ document.addEventListener("DOMContentLoaded", function(e){
     });
     document.getElementById('minprecio').addEventListener('click', ()=>{
         ordenarMenorPrecio(array);
-    });    
+    });
+    document.getElementById('buscador').addEventListener('keyup', ()=>{
+        buscarProducto()
+    })    
 });
